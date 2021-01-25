@@ -1,6 +1,5 @@
-/** @jsx jsx */
 import { forwardRef } from "react";
-import { Interpolation, Theme, jsx } from "@emotion/react";
+import { Interpolation, Theme } from "@emotion/react";
 
 interface BlockWrapperProps {
   wrapperCss?: Interpolation<Theme>;

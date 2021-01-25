@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@emotion/react";
 import { motion } from "framer-motion";
 
 import { useTheme } from "../../theme";
@@ -8,6 +6,7 @@ export const Button: React.FC<{
   type: JSX.IntrinsicElements["button"]["type"];
 }> = (props) => {
   const { colors } = useTheme();
+
   return (
     <motion.button
       whileHover={{
