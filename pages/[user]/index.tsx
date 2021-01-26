@@ -12,7 +12,7 @@ const UserPage = ({ userData }) => {
 
   return (
     <main css={{ backgroundColor: bgColor || "yellow", minHeight: "100vh" }}>
-      <BlockWrapper wrapperCss={{ backgroundColor: "#DA4167" }}>
+      <BlockWrapper wrapperCss={{ backgroundColor: "#EA5C5A" }}>
         <h1 css={{ padding: "100px 0" }}>Summary of {login} account</h1>
       </BlockWrapper>
       <BlockWrapper>
