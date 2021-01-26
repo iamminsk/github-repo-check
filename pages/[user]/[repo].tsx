@@ -4,34 +4,30 @@ import Image from "next/image";
 import { BlockWrapper } from "../../components/ui/BlockWrapper";
 import { Card } from "../../components/ui/Card";
 import { Info } from "../../components/ui/Info";
+import { Owner } from "../../components/Owner";
 
 const RepoPage = ({ repoData, contributorsData }) => {
-  console.log(contributorsData);
-
   const router = useRouter();
   const { bgColor } = router.query;
 
   return (
-    <main css={{ backgroundColor: bgColor || "yellow", minHeight: "100vh" }}>
-      <BlockWrapper wrapperCss={{ backgroundColor: "blue" }}>
+    <main
+      css={{
+        backgroundColor: bgColor || "yellow",
+        minHeight: "100vh",
+      }}
+    >
+      <BlockWrapper wrapperCss={{ backgroundColor: "#DA4167" }}>
         <h1 css={{ padding: "100px 0" }}>
           Summary of {repoData.owner.login}'s {repoData.name} repo
         </h1>
       </BlockWrapper>
       <BlockWrapper>
         <div css={{ display: "flex", flexWrap: "wrap", padding: "50px 0" }}>
-          <Card css={{ marginBottom: 20 }}>
-            <h2 css={{ marginBottom: 20 }}>Owner</h2>
-            <div css={{ display: "flex", alignItems: "center" }}>
-              <Image
-                src={repoData.owner.avatar_url}
-                alt="Owner's avatar"
-                width={100}
-                height={100}
-              />
-              <p css={{ marginLeft: 50 }}>{repoData.owner.login}</p>
-            </div>
-          </Card>
+          <Owner
+            avatarUrl={repoData.owner.avatar_url}
+            login={repoData.owner.login}
+          />
           <Card css={{ marginBottom: 20 }}>
             <h2 css={{ marginBottom: 20 }}>Repo's info</h2>
             <Info
@@ -79,14 +75,17 @@ const RepoPage = ({ repoData, contributorsData }) => {
           </Card>
           <Card>
             <h2 css={{ marginBottom: 20 }}>Top repo's contributors</h2>
-            {contributorsData.slice(0, 10).map((contributor) => (
-              <div
+            {contributorsData.slice(0, 10).map((contributor, index) => (
+              <a
+                href={contributor.html_url}
+                target="_blank"
                 css={{
                   display: "flex",
                   alignItems: "center",
                   margin: "10px 0",
                 }}
               >
+                <span css={{ width: 25 }}>{index + 1}</span>
                 <div
                   css={{
                     borderRadius: "50%",
@@ -94,6 +93,7 @@ const RepoPage = ({ repoData, contributorsData }) => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
+                    marginRight: 20,
                   }}
                 >
                   <Image
@@ -103,14 +103,8 @@ const RepoPage = ({ repoData, contributorsData }) => {
                     height={50}
                   />
                 </div>
-                <a
-                  href={contributor.html_url}
-                  target="_blank"
-                  css={{ marginLeft: 20 }}
-                >
-                  {contributor.login}
-                </a>
-              </div>
+                {contributor.login}
+              </a>
             ))}
           </Card>
         </div>

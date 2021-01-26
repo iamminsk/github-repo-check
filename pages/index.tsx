@@ -5,6 +5,11 @@ import { Init } from "../components/Init";
 import { Summary } from "../components/Summary";
 
 const App = () => {
+  const [formData, setFormData] = React.useState<{
+    user: string;
+    repoName: string;
+    bgColor: string;
+  } | null>(null);
   const [currentStep, setCurrentStep] = React.useState<
     "init" | "creator" | "summary"
   >("init");
@@ -14,10 +19,10 @@ const App = () => {
       <main>
         {currentStep === "init" && <Init setCurrentStep={setCurrentStep} />}
         {currentStep === "creator" && (
-          <Creator setCurrentStep={setCurrentStep} />
+          <Creator setCurrentStep={setCurrentStep} setFormData={setFormData} />
         )}
         {currentStep === "summary" && (
-          <Summary setCurrentStep={setCurrentStep} />
+          <Summary setCurrentStep={setCurrentStep} formData={formData} />
         )}
       </main>
     </>
