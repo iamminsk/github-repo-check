@@ -12,7 +12,7 @@ export interface FormData {
 
 export type CurrentStep = "init" | "creator" | "summary";
 
-const App = () => {
+const App = ({ host }) => {
   const [formData, setFormData] = React.useState<FormData | null>(null);
   const [currentStep, setCurrentStep] = React.useState<CurrentStep>("init");
 
@@ -24,7 +24,11 @@ const App = () => {
           <Creator setCurrentStep={setCurrentStep} setFormData={setFormData} />
         )}
         {currentStep === "summary" && (
-          <Summary setCurrentStep={setCurrentStep} formData={formData} />
+          <Summary
+            setCurrentStep={setCurrentStep}
+            formData={formData}
+            host={host}
+          />
         )}
       </main>
     </>
@@ -32,3 +36,15 @@ const App = () => {
 };
 
 export default App;
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  let host;
+  if (req) {
+    host = req.headers.host;
+  }
+
+  return {
+    props: { host },
+  };
+}

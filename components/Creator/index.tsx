@@ -203,7 +203,13 @@ export const Creator: React.FC<CreatorProps> = ({
             />
           )}
         </Card>
-        <Button type="submit" wrapperCss={{ marginTop: 30 }}>
+        <Button
+          type="submit"
+          wrapperCss={{
+            marginTop: 30,
+            [bp.FROM_TABLET]: { flexBasis: "50%", marginRight: 10 },
+          }}
+        >
           ready! show me url
         </Button>
       </form>

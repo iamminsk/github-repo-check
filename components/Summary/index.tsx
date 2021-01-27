@@ -7,7 +7,7 @@ import { Card } from "../ui/Card";
 import { useTheme } from "../../theme";
 import { Button } from "../ui/Button";
 
-export const Summary = ({ setCurrentStep, formData }) => {
+export const Summary = ({ setCurrentStep, formData, host }) => {
   const { colors, bp } = useTheme();
 
   const [infoText, setInfoText] = React.useState("click to copy");
@@ -22,9 +22,8 @@ export const Summary = ({ setCurrentStep, formData }) => {
   }, []);
 
   const { user, repoName, bgColor } = formData;
-  const domain = process.env.VERCEL_URL || "localhost:3000";
 
-  const url = new URL(`https://${domain}/${user}/${repoName}`);
+  const url = new URL(`https://${host}/${user}/${repoName}`);
   url.search = new URLSearchParams(formData.data).toString();
 
   if (bgColor) {

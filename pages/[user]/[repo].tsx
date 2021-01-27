@@ -1,4 +1,5 @@
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 import { BlockWrapper } from "../../components/ui/BlockWrapper";
 import { Owner } from "../../components/Owner";
