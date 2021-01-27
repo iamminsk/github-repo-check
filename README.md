@@ -1,0 +1,4 @@
+# superchat-frontend-challenge
+
+- `yarn` in root to install dependencies
+- `yarn dev` to serve app
