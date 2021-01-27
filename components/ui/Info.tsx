@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 
 interface InfoProps {
   title: string;
-  text: string;
+  text: string | number;
   isUrl?: boolean;
 }
 
@@ -25,6 +25,7 @@ export const Info: React.FC<InfoProps & JSX.IntrinsicElements["div"]> = ({
       </p>
       {isUrl ? (
         <motion.a
+          // @ts-ignore
           href={text}
           target="_blank"
           whileHover={{

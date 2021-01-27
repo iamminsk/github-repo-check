@@ -6,7 +6,10 @@ interface OwnerSummaryProps {
   followersCount: number;
 }
 
-export const OwnerSummary = ({ reposCount, followersCount }) => {
+export const OwnerSummary: React.FC<OwnerSummaryProps> = ({
+  reposCount,
+  followersCount,
+}) => {
   return (
     <Card css={{ marginBottom: 20 }}>
       <h2 css={{ marginBottom: 20 }}>User's info</h2>

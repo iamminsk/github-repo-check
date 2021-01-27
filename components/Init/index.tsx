@@ -5,7 +5,11 @@ import { BlockWrapper } from "../ui/BlockWrapper";
 import { Button } from "../ui/Button";
 import { Card } from "../ui/Card";
 
-export const Init = ({ setCurrentStep }) => {
+interface InitProps {
+  setCurrentStep: (currentStep) => void;
+}
+
+export const Init: React.FC<InitProps> = ({ setCurrentStep }) => {
   const onClick = React.useCallback(() => {
     setCurrentStep("creator");
   }, []);
