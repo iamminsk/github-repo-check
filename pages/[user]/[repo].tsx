@@ -6,29 +6,14 @@ import { BlockWrapper } from "../../components/ui/BlockWrapper";
 import { Card } from "../../components/ui/Card";
 import { Info } from "../../components/ui/Info";
 import { Owner } from "../../components/Owner";
+import { ErrorInfo } from "../../components/ErrorInfo";
 
 const RepoPage = ({ repoData, contributorsData }) => {
   const router = useRouter();
-  const { bgColor } = router.query;
+  const { bgColor, showMainLanguage, showOpenIssues } = router.query;
 
   if (!repoData) {
-    return (
-      <main>
-        <BlockWrapper
-          css={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            minHeight: "100vh",
-          }}
-          wrapperCss={{ minHeight: "100vh" }}
-        >
-          <p css={{ fontFamily: "Cairo", fontSize: 80, lineHeight: "1.1" }}>
-            Ayyyyy something went wrong
-          </p>
-        </BlockWrapper>
-      </main>
-    );
+    return <ErrorInfo />;
   }
 
   return (
@@ -88,11 +73,13 @@ const RepoPage = ({ repoData, contributorsData }) => {
               isUrl={true}
               css={{ marginBottom: 20 }}
             />
-            <Info
-              title="main language"
-              text={repoData.language}
-              css={{ marginBottom: 20 }}
-            />
+            {showMainLanguage && (
+              <Info
+                title="main language"
+                text={repoData.language}
+                css={{ marginBottom: 20 }}
+              />
+            )}
             <Info
               title="subscribers"
               text={repoData.subscribers_count}
@@ -103,7 +90,9 @@ const RepoPage = ({ repoData, contributorsData }) => {
               text={repoData.watchers}
               css={{ marginBottom: 20 }}
             />
-            <Info title="open issues" text={repoData.open_issues} />
+            {showOpenIssues && (
+              <Info title="open issues" text={repoData.open_issues} />
+            )}
           </Card>
           <Card css={{ padding: 20 }}>
             <h2 css={{ marginBottom: 20, padding: 5 }}>
@@ -160,8 +149,6 @@ export async function getServerSideProps(context) {
   const { user, repo } = context.params;
 
   const repoRes = await fetch(`https://api.github.com/repos/${user}/${repo}`);
-
-  console.log("AAAA", repoRes);
 
   if (!repoRes.ok) {
     return { props: { repoData: null } };

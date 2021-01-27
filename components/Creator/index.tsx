@@ -2,7 +2,6 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { HexColorPicker } from "react-colorful";
 import { motion } from "framer-motion";
-
 import "react-colorful/dist/index.css";
 
 import { Input } from "../ui/Input";
@@ -10,13 +9,22 @@ import { BlockWrapper } from "../ui/BlockWrapper";
 import { Card } from "../ui/Card";
 import { useTheme } from "../../theme";
 import { Button } from "../ui/Button";
+import { Checkbox } from "../ui/Checkbox";
 
-export const Creator = ({ setCurrentStep, setFormData }) => {
+interface CreatorProps {
+  setCurrentStep: (currentStep) => void;
+  setFormData: (formData) => void;
+}
+
+export const Creator: React.FC<CreatorProps> = ({
+  setCurrentStep,
+  setFormData,
+}) => {
   const { colors } = useTheme();
   const form = useForm({
     reValidateMode: "onSubmit",
   });
-  const { register, handleSubmit, errors, getValues } = form;
+  const { register, handleSubmit, errors, watch } = form;
 
   const [isPickerVisible, setIsPickerVisible] = React.useState(false);
   const [bgColor, setBgColor] = React.useState("#fff");
@@ -24,9 +32,13 @@ export const Creator = ({ setCurrentStep, setFormData }) => {
   const onFormSubmit = React.useCallback(
     (data) => {
       setFormData({
-        user: getValues("name"),
-        repoName: getValues("repoName"),
+        user: watch("name"),
+        repoName: watch("repoName"),
         bgColor: isPickerVisible ? bgColor : undefined,
+        data: {
+          showMainLanguage: watch("showMainLanguage"),
+          showOpenIssues: watch("showOpenIssues"),
+        },
       });
       setCurrentStep("summary");
     },
@@ -83,7 +95,7 @@ export const Creator = ({ setCurrentStep, setFormData }) => {
               validate: {
                 exists: async (value) => {
                   const res = await fetch(
-                    `https://api.github.com/repos/${getValues("name")}/${value}`
+                    `https://api.github.com/repos/${watch("name")}/${value}`
                   );
                   return res.ok || "repo doesn't exist";
                 },
@@ -92,6 +104,30 @@ export const Creator = ({ setCurrentStep, setFormData }) => {
             errorMessage={errors.repoName?.message}
             wrapperCss={{ marginBottom: 10 }}
           />
+        </Card>
+        <Card css={{ marginBottom: 20 }}>
+          <p
+            css={{
+              fontSize: 25,
+              lineHeight: "1",
+              marginBottom: 30,
+              fontFamily: "Cairo",
+            }}
+          >
+            What to include in the summary?
+          </p>
+          <div css={{ display: "flex", flexDirection: "column" }}>
+            <Checkbox
+              ref={register}
+              label="main language"
+              name={`showMainLanguage`}
+            />
+            <Checkbox
+              ref={register}
+              label="open issues"
+              name={`showOpenIssues`}
+            />
+          </div>
         </Card>
         <Card
           css={{

@@ -25,12 +25,7 @@ export const Summary = ({ setCurrentStep, formData }) => {
   const domain = process.env.VERCEL_URL || "localhost:3000";
 
   const url = new URL(`https://${domain}/${user}/${repoName}`);
-
-  if (bgColor) {
-    url.searchParams.append("bgColor", bgColor);
-  }
-
-  console.log(url);
+  url.search = new URLSearchParams({ ...formData.data, bgColor }).toString();
 
   return (
     <BlockWrapper css={{ marginTop: 30 }}>
@@ -69,6 +64,7 @@ export const Summary = ({ setCurrentStep, formData }) => {
             borderRadius: 10,
             fontSize: 20,
             cursor: "pointer",
+            wordBreak: "break-all",
           }}
         >
           {url.href}
