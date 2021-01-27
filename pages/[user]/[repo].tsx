@@ -11,6 +11,26 @@ const RepoPage = ({ repoData, contributorsData }) => {
   const router = useRouter();
   const { bgColor } = router.query;
 
+  if (!repoData) {
+    return (
+      <main>
+        <BlockWrapper
+          css={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            minHeight: "100vh",
+          }}
+          wrapperCss={{ minHeight: "100vh" }}
+        >
+          <p css={{ fontFamily: "Cairo", fontSize: 80, lineHeight: "1.1" }}>
+            Ayyyyy something went wrong
+          </p>
+        </BlockWrapper>
+      </main>
+    );
+  }
+
   return (
     <main
       css={{
@@ -91,6 +111,7 @@ const RepoPage = ({ repoData, contributorsData }) => {
             </h2>
             {contributorsData.slice(0, 10).map((contributor, index) => (
               <motion.a
+                key={index}
                 href={contributor.html_url}
                 target="_blank"
                 whileHover={{
@@ -139,6 +160,13 @@ export async function getServerSideProps(context) {
   const { user, repo } = context.params;
 
   const repoRes = await fetch(`https://api.github.com/repos/${user}/${repo}`);
+
+  console.log("AAAA", repoRes);
+
+  if (!repoRes.ok) {
+    return { props: { repoData: null } };
+  }
+
   const repoData = await repoRes.json();
 
   const contributorsRes = await fetch(

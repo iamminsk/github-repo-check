@@ -9,7 +9,11 @@ const bp = {
 };
 
 const colors = {
-  SONIC_SILVER: "#757575",
+  TUNA: "#EA5C5A",
+  BLACK: "#000",
+  WHITE: "#fff",
+  BLUE: "#3E85DA", // rgb(62,133,218)
+  RED: "#CA0303",
 };
 
 export const useTheme = () => ({
