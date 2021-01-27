@@ -1,5 +1,6 @@
 import { Card } from "../../components/ui/Card";
 import { Info } from "../../components/ui/Info";
+import { useTheme } from "../../theme";
 
 interface RepoDataProps {
   repoData: {
@@ -21,8 +22,19 @@ export const RepoData: React.FC<RepoDataProps> = ({
   showMainLanguage,
   showOpenIssues,
 }) => {
+  const { bp } = useTheme();
+
   return (
-    <Card css={{ marginBottom: 20 }}>
+    <Card
+      css={{
+        marginBottom: 20,
+        [bp.FROM_TABLET]: {
+          flexBasis: "58%",
+          marginRight: "auto",
+          marginBottom: 0,
+        },
+      }}
+    >
       <h2 css={{ marginBottom: 20 }}>Repo's info</h2>
       <Info title="name" text={repoData.name} css={{ marginBottom: 20 }} />
       <Info

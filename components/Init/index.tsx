@@ -14,7 +14,7 @@ export const Init: React.FC<InitProps> = ({ setCurrentStep }) => {
     setCurrentStep("creator");
   }, []);
 
-  const { colors } = useTheme();
+  const { colors, bp } = useTheme();
 
   return (
     <BlockWrapper
@@ -23,6 +23,7 @@ export const Init: React.FC<InitProps> = ({ setCurrentStep }) => {
         minHeight: "100vh",
         display: "flex",
         alignItems: "center",
+        justifyContent: "center",
       }}
     >
       <Card
@@ -31,6 +32,9 @@ export const Init: React.FC<InitProps> = ({ setCurrentStep }) => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-evenly",
+          [bp.FROM_TABLET]: {
+            maxWidth: 600,
+          },
         }}
       >
         <h2

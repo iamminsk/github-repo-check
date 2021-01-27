@@ -20,7 +20,7 @@ export const Creator: React.FC<CreatorProps> = ({
   setCurrentStep,
   setFormData,
 }) => {
-  const { colors } = useTheme();
+  const { colors, bp } = useTheme();
   const form = useForm({
     reValidateMode: "onSubmit",
   });
@@ -58,8 +58,24 @@ export const Creator: React.FC<CreatorProps> = ({
       >
         Fill following data
       </p>
-      <form onSubmit={handleSubmit(onFormSubmit)}>
-        <Card css={{ marginBottom: 20 }}>
+      <form
+        onSubmit={handleSubmit(onFormSubmit)}
+        css={{
+          [bp.FROM_TABLET]: {
+            display: "flex",
+            flexWrap: "wrap",
+          },
+        }}
+      >
+        <Card
+          css={{
+            marginBottom: 20,
+            [bp.FROM_TABLET]: {
+              flexBasis: "50%",
+              marginRight: 20,
+            },
+          }}
+        >
           <p
             css={{
               fontSize: 25,
@@ -105,7 +121,14 @@ export const Creator: React.FC<CreatorProps> = ({
             wrapperCss={{ marginBottom: 10 }}
           />
         </Card>
-        <Card css={{ marginBottom: 20 }}>
+        <Card
+          css={{
+            marginBottom: 20,
+            [bp.FROM_TABLET]: {
+              flexBasis: "40%",
+            },
+          }}
+        >
           <p
             css={{
               fontSize: 25,
@@ -135,8 +158,22 @@ export const Creator: React.FC<CreatorProps> = ({
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
+            [bp.FROM_TABLET]: {
+              flexBasis: "50%",
+            },
           }}
         >
+          <p
+            css={{
+              fontSize: 25,
+              lineHeight: "1",
+              marginBottom: 30,
+              fontFamily: "Cairo",
+              alignSelf: "flex-start",
+            }}
+          >
+            Background color?
+          </p>
           <motion.span
             role="button"
             onClick={() => setIsPickerVisible(!isPickerVisible)}
@@ -153,7 +190,9 @@ export const Creator: React.FC<CreatorProps> = ({
               borderRadius: 10,
             }}
           >
-            {isPickerVisible ? "nahh i want default bgColor" : "choose bgColor"}
+            {isPickerVisible
+              ? "nahh i want default bgColor"
+              : "choose background color"}
           </motion.span>
           {isPickerVisible && (
             <HexColorPicker

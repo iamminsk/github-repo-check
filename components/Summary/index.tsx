@@ -8,7 +8,7 @@ import { useTheme } from "../../theme";
 import { Button } from "../ui/Button";
 
 export const Summary = ({ setCurrentStep, formData }) => {
-  const { colors } = useTheme();
+  const { colors, bp } = useTheme();
 
   const [infoText, setInfoText] = React.useState("click to copy");
 
@@ -25,7 +25,11 @@ export const Summary = ({ setCurrentStep, formData }) => {
   const domain = process.env.VERCEL_URL || "localhost:3000";
 
   const url = new URL(`https://${domain}/${user}/${repoName}`);
-  url.search = new URLSearchParams({ ...formData.data, bgColor }).toString();
+  url.search = new URLSearchParams(formData.data).toString();
+
+  if (bgColor) {
+    url.searchParams.append("bgColor", bgColor);
+  }
 
   return (
     <BlockWrapper css={{ marginTop: 30 }}>
@@ -71,9 +75,13 @@ export const Summary = ({ setCurrentStep, formData }) => {
         </span>
         <Link href={url.pathname + url.search}>
           <motion.a
+            whileHover={{
+              backgroundColor: "rgba(62,133,218, 0)",
+              color: colors.BLUE,
+            }}
             css={{
               height: 50,
-              padding: 10,
+              padding: 8,
               border: `2px solid ${colors.BLUE}`,
               borderRadius: 10,
               backgroundColor: "rgba(62,133,218, 1)",
@@ -88,7 +96,16 @@ export const Summary = ({ setCurrentStep, formData }) => {
           </motion.a>
         </Link>
       </Card>
-      <Button type="button" onClick={onClick} wrapperCss={{ marginTop: 30 }}>
+      <Button
+        type="button"
+        onClick={onClick}
+        wrapperCss={{
+          marginTop: 30,
+          [bp.FROM_TABLET]: {
+            width: 300,
+          },
+        }}
+      >
         create a new one
       </Button>
     </BlockWrapper>

@@ -2,6 +2,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 
 import { Card } from "../../components/ui/Card";
+import { useTheme } from "../../theme";
 
 interface ContributorsProps {
   contributorsData: Array<{
@@ -14,8 +15,17 @@ interface ContributorsProps {
 export const Contributors: React.FC<ContributorsProps> = ({
   contributorsData,
 }) => {
+  const { bp } = useTheme();
+
   return (
-    <Card css={{ padding: 20 }}>
+    <Card
+      css={{
+        padding: 20,
+        [bp.FROM_TABLET]: {
+          flexBasis: "40%",
+        },
+      }}
+    >
       <h2 css={{ marginBottom: 20, padding: 5 }}>Top repo's contributors</h2>
       {contributorsData.slice(0, 10).map((contributor, index) => (
         <motion.a

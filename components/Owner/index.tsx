@@ -1,5 +1,6 @@
 import Image from "next/image";
 
+import { useTheme } from "../../theme";
 import { Card } from "../ui/Card";
 
 interface OwnerProps {
@@ -8,6 +9,8 @@ interface OwnerProps {
 }
 
 export const Owner: React.FC<OwnerProps> = ({ avatarUrl, login }) => {
+  const { bp } = useTheme();
+
   return (
     <Card css={{ marginBottom: 20 }}>
       <h2 css={{ marginBottom: 20 }}>Owner</h2>
@@ -16,6 +19,9 @@ export const Owner: React.FC<OwnerProps> = ({ avatarUrl, login }) => {
           display: "flex",
           alignItems: "center",
           justifyContent: "space-around",
+          [bp.FROM_TABLET]: {
+            justifyContent: "flex-start",
+          },
         }}
       >
         <div
@@ -36,7 +42,16 @@ export const Owner: React.FC<OwnerProps> = ({ avatarUrl, login }) => {
           />
         </div>
 
-        <p css={{ color: "#EA5C5A", fontFamily: "Cairo", fontSize: 20 }}>
+        <p
+          css={{
+            color: "#EA5C5A",
+            fontFamily: "Cairo",
+            fontSize: 20,
+            [bp.FROM_TABLET]: {
+              fontSize: 40,
+            },
+          }}
+        >
           {login}
         </p>
       </div>

@@ -5,10 +5,12 @@ import { Owner } from "../../components/Owner";
 import { ErrorInfo } from "../../components/ErrorInfo";
 import { Contributors } from "../../components/Contributors";
 import { RepoData } from "../../components/RepoData";
+import { useTheme } from "../../theme";
 
 const RepoPage = ({ repoData, contributorsData }) => {
   const router = useRouter();
   const { bgColor, showMainLanguage, showOpenIssues } = router.query;
+  const { bp } = useTheme();
 
   if (!repoData) {
     return <ErrorInfo />;
@@ -30,25 +32,63 @@ const RepoPage = ({ repoData, contributorsData }) => {
             span: {
               fontFamily: "Cairo",
             },
+            [bp.FROM_TABLET]: {
+              fontSize: 60,
+            },
           }}
         >
           Summary of <br />
-          <span css={{ color: "black", fontSize: 60 }}>{repoData.name} </span>
-          <span css={{ whiteSpace: "nowrap", fontSize: 40 }}>repo by</span>
+          <span
+            css={{
+              color: "black",
+              fontSize: 60,
+              [bp.FROM_TABLET]: {
+                fontSize: 75,
+              },
+            }}
+          >
+            {repoData.name}{" "}
+          </span>
+          <span
+            css={{
+              whiteSpace: "nowrap",
+              fontSize: 40,
+              [bp.FROM_TABLET]: { fontSize: 60 },
+            }}
+          >
+            repo by
+          </span>
           <br />
-          <span css={{ color: "black", fontSize: 60 }}>
+          <span
+            css={{
+              color: "black",
+              fontSize: 60,
+              [bp.FROM_TABLET]: {
+                fontSize: 75,
+              },
+            }}
+          >
             {repoData.owner.login}
           </span>
         </h1>
-        <div css={{ display: "flex", flexWrap: "wrap", padding: "50px 0" }}>
+        <div
+          css={{
+            display: "flex",
+            flexWrap: "wrap",
+            padding: "50px 0",
+            [bp.FROM_TABLET]: {
+              flexWrap: "wrap",
+            },
+          }}
+        >
           <Owner
             avatarUrl={repoData.owner.avatar_url}
             login={repoData.owner.login}
           />
           <RepoData
             repoData={repoData}
-            showMainLanguage={Boolean(showMainLanguage)}
-            showOpenIssues={Boolean(showOpenIssues)}
+            showMainLanguage={showMainLanguage === "true"}
+            showOpenIssues={showOpenIssues === "true"}
           />
           <Contributors contributorsData={contributorsData} />
         </div>
